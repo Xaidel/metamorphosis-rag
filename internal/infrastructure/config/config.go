@@ -10,12 +10,17 @@ import (
 )
 
 type AppConfig struct {
-	Storage Storage
+	Storage    Storage
+	Collection Collection
 }
 
 type Storage struct {
 	Host string
 	Port int
+}
+
+type Collection struct {
+	Name string
 }
 
 func Load() (*AppConfig, error) {
@@ -45,10 +50,18 @@ func Load() (*AppConfig, error) {
 		return nil, fmt.Errorf("parsing QDRANT_PORT: %w", err)
 	}
 
+	collectionName, err := requiredEnv("COLLECTION_NAME")
+	if err != nil {
+		return nil, fmt.Errorf("loading COLLECTION_NAME: %w", err)
+	}
+
 	return &AppConfig{
 		Storage: Storage{
 			Host: qdrantHost,
 			Port: qdrantPort,
+		},
+		Collection: Collection{
+			Name: collectionName,
 		},
 	}, nil
 }

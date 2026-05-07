@@ -24,7 +24,7 @@ func Bootstrap(ctx context.Context) (*Application, error) {
 		return nil, err
 	}
 
-	err = collections.NewCollection(ctx, vector_storage)
+	err = collections.NewCollection(ctx, vector_storage, cfg.Collection)
 	if err != nil {
 		return nil, err
 	}

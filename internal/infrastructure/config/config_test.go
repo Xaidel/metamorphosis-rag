@@ -12,6 +12,7 @@ func TestLoadFromEnvironment(t *testing.T) {
 	t.Setenv("ENV", "production")
 	t.Setenv("QDRANT_HOST", "test-host")
 	t.Setenv("QDRANT_PORT", "1234")
+	t.Setenv("COLLECTION_NAME", "test")
 
 	config, err := config.Load()
 	if err != nil {
@@ -28,7 +29,7 @@ func TestLoadFromEnvironment(t *testing.T) {
 }
 
 func TestLoadDevelopmentDotEnv(t *testing.T) {
-	clearEnvironment(t, []string{"QDRANT_HOST", "QDRANT_PORT"})
+	clearEnvironment(t, []string{"QDRANT_HOST", "QDRANT_PORT", "COLLECTION_NAME"})
 
 	t.Setenv("ENV", "development")
 	tempDir := t.TempDir()
@@ -52,7 +53,7 @@ func TestLoadDevelopmentDotEnv(t *testing.T) {
 }
 
 func TestLoadProdDoesNotReadDotEnv(t *testing.T) {
-	clearEnvironment(t, []string{"QDRANT_HOST", "QDRANT_PORT"})
+	clearEnvironment(t, []string{"QDRANT_HOST", "QDRANT_PORT", "COLLECTION_NAME"})
 	t.Setenv("ENV", "production")
 	tempDir := t.TempDir()
 
