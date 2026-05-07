@@ -12,8 +12,10 @@ import (
 
 func main() {
 	if err := run(); err != nil {
+		fmt.Println("Error here")
 		panic(err)
 	}
+	fmt.Println("Application exited successfully")
 }
 
 func run() error {

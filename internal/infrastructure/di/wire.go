@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"github.com/xaidel/metamorphosis-rag/internal/infrastructure/config"
+	"github.com/xaidel/metamorphosis-rag/internal/infrastructure/db"
+	"github.com/xaidel/metamorphosis-rag/internal/infrastructure/db/collections"
 )
 
 type Application struct {
@@ -12,6 +14,17 @@ type Application struct {
 
 func Bootstrap(ctx context.Context) (*Application, error) {
 	cfg, err := config.Load()
+	if err != nil {
+		return nil, err
+	}
+
+	vector_storage, err := db.NewVectorStorage(cfg.Storage)
+	if err != nil {
+		vector_storage.Close()
+		return nil, err
+	}
+
+	err = collections.NewCollection(ctx, vector_storage)
 	if err != nil {
 		return nil, err
 	}
