@@ -18,12 +18,12 @@ func TestLoadFromEnvironment(t *testing.T) {
 		t.Fatalf("expected no error, got %v", err)
 	}
 
-	if config.QDrant.Host != "test-host" {
-		t.Errorf("expected QDrant.Host to be 'test-host', got '%s'", config.QDrant.Host)
+	if config.Storage.Host != "test-host" {
+		t.Errorf("expected Storage.Host to be 'test-host', got '%s'", config.Storage.Host)
 	}
 
-	if config.QDrant.Port != 1234 {
-		t.Errorf("expected QDrant.Port to be 1234, got %d", config.QDrant.Port)
+	if config.Storage.Port != 1234 {
+		t.Errorf("expected Storage.Port to be 1234, got %d", config.Storage.Port)
 	}
 }
 

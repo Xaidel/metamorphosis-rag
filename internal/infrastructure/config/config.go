@@ -10,10 +10,10 @@ import (
 )
 
 type AppConfig struct {
-	QDrant QDrantConfig
+	Storage Storage
 }
 
-type QDrantConfig struct {
+type Storage struct {
 	Host string
 	Port int
 }
@@ -46,7 +46,7 @@ func Load() (*AppConfig, error) {
 	}
 
 	return &AppConfig{
-		QDrant: QDrantConfig{
+		Storage: Storage{
 			Host: qdrantHost,
 			Port: qdrantPort,
 		},
