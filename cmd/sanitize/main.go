@@ -43,9 +43,12 @@ func main() {
 	paragraphs1 := rebuildParagraphs(string(chap1txt))
 	paragraphs2 := rebuildParagraphs(string(chap2txt))
 	paragraphs3 := rebuildParagraphs(string(chap3txt))
-	convertToMetadata(paragraphs1, 1)
-	convertToMetadata(paragraphs2, 2)
-	convertToMetadata(paragraphs3, 3)
+	chunk1 := overlapParagraphs(paragraphs1, 2, 1)
+	chunk2 := overlapParagraphs(paragraphs2, 2, 1)
+	chunk3 := overlapParagraphs(paragraphs3, 2, 1)
+	convertToMetadata(chunk1, 1)
+	convertToMetadata(chunk2, 2)
+	convertToMetadata(chunk3, 3)
 
 }
 
@@ -74,6 +77,15 @@ func convertToMetadata(paragraphs []string, chapterNum int) {
 			log.Error("Error writing JSON file: %v\n", err)
 		}
 	}
+}
+
+func overlapParagraphs(paragraphs []string, windowSize int, step int) []string {
+	var chunks []string
+	for i := 0; i+windowSize < len(paragraphs); i += step {
+		window := paragraphs[i : i+windowSize]
+		chunks = append(chunks, strings.Join(window, "\n\n"))
+	}
+	return chunks
 }
 
 func rebuildParagraphs(text string) []string {
