@@ -7,15 +7,16 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/charmbracelet/log"
 	"github.com/xaidel/metamorphosis-rag/internal/infrastructure/di"
 )
 
 func main() {
 	if err := run(); err != nil {
-		fmt.Println("Error here")
+		log.Error("Error here", "error", err)
 		panic(err)
 	}
-	fmt.Println("Application exited successfully")
+	log.Info("App exited successfully")
 }
 
 func run() error {
